@@ -105,7 +105,7 @@ public class WareHouseService {
             material.setWareHouse(null);
         }
         wareHouseRepo.delete(wareHouse.get());
-        departmentService.deleteByID(wareHouse.get().getDepartment().getId());
+        departmentService.deleteByName(wareHouse.get().getDepartment().getName());
 
     }
     @Transactional

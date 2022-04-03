@@ -20,26 +20,26 @@ public class DepartmentController {
     public List<Department> getAllDepartments(){
         return departmentService.getAllDepartments();
     }
-    @GetMapping("ById/{id}")
-    public Department getById(@PathVariable Integer id){
-        return departmentService.getById(id);
+    @GetMapping("ByName/{name}")
+    public Department getById(@PathVariable String name){
+        return departmentService.getByName(name);
 
     }
     @PostMapping("addDepartment")
     public void addDepartment(@RequestBody Department department){
         departmentService.addDepartment(department);
     }
-    @DeleteMapping("deleteByID/{id}")
-    public void deleteByID(@PathVariable Integer id){
-        departmentService.deleteByID(id);
+    @DeleteMapping("deleteByName/{name}")
+    public void deleteByName(@PathVariable String name){
+        departmentService.deleteByName(name);
     }
-    @PutMapping("update/{id}")
-    public void updateDepartment(@PathVariable Integer id,
+    @PutMapping("update/{name}")
+    public void updateDepartment(@PathVariable String name1,
                                  @RequestParam (required = false) String phone,
                                  @RequestParam (required = false) String fax,
                                  @RequestParam (required = false) String name,
                                  @RequestParam (required = false) String email){
-        departmentService.updateDepartment(id,phone,fax,name,email);
+        departmentService.updateDepartment(name1,phone,fax,name,email);
     }
 
 }

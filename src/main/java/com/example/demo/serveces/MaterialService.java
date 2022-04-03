@@ -1,9 +1,6 @@
 package com.example.demo.serveces;
 
-import com.example.demo.model.Material;
-import com.example.demo.model.MaterialSupplier;
-import com.example.demo.model.Supplier;
-import com.example.demo.model.WareHouse;
+import com.example.demo.model.*;
 import com.example.demo.repositries.MaterialSupplierRepo;
 import com.example.demo.repositries.MaterialsRepo;
 import com.example.demo.repositries.WareHouseRepo;
@@ -20,14 +17,16 @@ public class MaterialService {
     private final MaterialSupplierRepo materialSupplierRepo;
     private final WareHouseRepo wareHouseRepo;
     private final SupplierService supplierService;
+    private final DepartmentService departmentService;
 
 
     @Autowired
-    public MaterialService(MaterialsRepo materialsRepo, MaterialSupplierRepo materialSupplierRepo, WareHouseRepo wareHouseRepo, SupplierService supplierService) {
+    public MaterialService(MaterialsRepo materialsRepo, MaterialSupplierRepo materialSupplierRepo, WareHouseRepo wareHouseRepo, SupplierService supplierService, DepartmentService departmentService) {
         this.materialsRepo = materialsRepo;
         this.materialSupplierRepo = materialSupplierRepo;
         this.wareHouseRepo = wareHouseRepo;
         this.supplierService = supplierService;
+        this.departmentService = departmentService;
     }
 
     public List<Material> getAll() {
@@ -51,8 +50,9 @@ public class MaterialService {
 
     }
 
-    public void addMaterial(Material material, Integer wareHouseId) {
-        Optional<WareHouse> wareHouse = wareHouseRepo.findById(wareHouseId);
+    public void addMaterial(Material material,String name) {
+        Department department=departmentService.getByName(name);
+        Optional<WareHouse> wareHouse=wareHouseRepo.findByDepartment(department);
         if (!wareHouse.isPresent()) {
             throw new IllegalStateException("wareHouse not found");
         }
@@ -60,8 +60,8 @@ public class MaterialService {
         materialsRepo.save(material);
     }
 
-    public void addSupplier(Integer supplierId, Integer materialId, MaterialSupplier materialSupplier) {
-        Supplier supplier = supplierService.getById(supplierId);
+    public void addSupplier(String userName, Integer materialId, MaterialSupplier materialSupplier) {
+        Supplier supplier = supplierService.getByUserName(userName);
         Material material = getById(materialId);
         materialSupplier.setMaterial(material);
         materialSupplier.setSupplier(supplier);

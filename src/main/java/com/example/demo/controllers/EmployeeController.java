@@ -51,7 +51,7 @@ public class EmployeeController {
         return employeeService.getBySalary(salary);
     }
     @DeleteMapping("deleteEmployee/{id}")
-    public void deleteById(@PathVariable Integer id){
+    public void deleteByUserName(@PathVariable Integer id){
         employeeService.deleteById(id);
     }
     @DeleteMapping("deleteEmployeeByUserName/{userName}")
@@ -59,13 +59,12 @@ public class EmployeeController {
         employeeService.deleteByUserName(userName);
     }
 
-    @PostMapping("/addEmployee/{departmentId}/{userId}")
+    @PostMapping("/addEmployee/{departmentId}")
     public void addEmployee(@RequestBody Employee employee,
-                            @PathVariable Integer departmentId,
-                            @PathVariable Integer userId ){
+                            @PathVariable Integer departmentId){
 
-        employeeService.addEmployee(employee,departmentId,userId);
-    }
+        employeeService.addEmployee(employee,departmentId);
+    }/*
     @PostMapping("/addHeadEmployee/{departmentId}/{userId}")
     public void addHeadEmployee(@RequestBody Employee employee,
                             @PathVariable Integer departmentId,
@@ -80,15 +79,15 @@ public class EmployeeController {
 
         employeeService.addAdmin(employee,departmentId,userId);
     }
-
-    @PutMapping("updateById/{id}")
+*/
+    @PutMapping("updateByUserName/{userName}")
     public void updateEmployee(
-            @PathVariable  Integer id ,
+            @PathVariable  String userName ,
             @RequestParam (required = false) Date startingDate,
             @RequestParam (required = false) Integer salary,
             @RequestParam (required = false) Integer role,
             @RequestParam (required = false) Integer departmentId){
-        employeeService.updateEmployee(id,startingDate,salary,departmentId,role);
+        employeeService.updateEmployee(userName,startingDate,salary,departmentId,role);
 
     }
 

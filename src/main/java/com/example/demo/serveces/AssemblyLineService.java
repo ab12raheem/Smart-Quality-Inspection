@@ -34,6 +34,14 @@ public class AssemblyLineService {
         }
         return assemblyLine.get();
     }
+    public AssemblyLine getByName(String name){
+        Department department= departmentService.getByName(name);
+        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findByDepartment(department);
+        if(!assemblyLine.isPresent()){
+            throw new IllegalStateException("assemblyLine not found");
+        }
+        return assemblyLine.get();
+    }
 
     public AssemblyLine getByDepartmentId(Integer departmentId) {
         Optional<Department>department=departmentRepo.findById(departmentId);
@@ -56,8 +64,9 @@ public class AssemblyLineService {
 
     }
 
-    public Set<Employee> getEmployees(Integer id) {
-        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findById(id);
+    public Set<Employee> getEmployees(String name) {
+        Department department= departmentService.getByName(name);
+        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findByDepartment(department);
         if(!assemblyLine.isPresent()){
             throw new IllegalStateException("assemblyLine not found");
         }
@@ -78,17 +87,19 @@ public class AssemblyLineService {
         assemblyLineRepo.save(assemblyLine);
     }
 
-    public void deleteById(Integer id) {
-        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findById(id);
+    public void deleteByName(String name) {
+        Department department= departmentService.getByName(name);
+        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findByDepartment(department);
         if(!assemblyLine.isPresent()){
             throw new IllegalStateException("assemblyLine not found");
         }
         assemblyLineRepo.delete(assemblyLine.get());
-        departmentService.deleteByID(assemblyLine.get().getDepartment().getId());
+        departmentService.deleteByName(assemblyLine.get().getDepartment().getName());
     }
     @Transactional
-    public void updateAssemblyLine(Integer id, String stage) {
-        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findById(id);
+    public void updateAssemblyLine(String name, String stage) {
+        Department department= departmentService.getByName(name);
+        Optional<AssemblyLine>assemblyLine=assemblyLineRepo.findByDepartment(department);
         if(!assemblyLine.isPresent()){
             throw new IllegalStateException("assemblyLine not found");
         }

@@ -27,8 +27,8 @@ public class DepartmentService {
        return departmentRepo.findAll();
     }
 
-    public Department getById(Integer id) {
-        Optional<Department> departmentOptional=departmentRepo.findById(id);
+    public Department getByName(String name) {
+        Optional<Department> departmentOptional=departmentRepo.findByName(name);
         if(!departmentOptional.isPresent()){
             throw new IllegalStateException("departmentNotFound");
 
@@ -48,8 +48,8 @@ public class DepartmentService {
         departmentRepo.save(department);
     }
 
-    public void deleteByID(Integer id) {
-        Optional<Department>department=departmentRepo.findById(id);
+    public void deleteByName(String name) {
+        Optional<Department>department=departmentRepo.findByName(name);
         if(!department.isPresent()){
             throw new IllegalStateException("department not found");
         }
@@ -63,8 +63,8 @@ public class DepartmentService {
     }
 
     @Transactional
-    public void updateDepartment(Integer id, String phone, String fax, String name, String email) {
-        Optional<Department> department = departmentRepo.findById(id);
+    public void updateDepartment(String name1, String phone, String fax, String name, String email) {
+        Optional<Department> department = departmentRepo.findByName(name1);
         if (department.isPresent()) {
             if (departmentRepo.getByEmail(email).isPresent()) {
                 throw new IllegalStateException("email name have been used before");

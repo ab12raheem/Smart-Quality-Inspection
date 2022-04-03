@@ -29,16 +29,16 @@ public class MaterialController {
     public List<MaterialSupplier> getSuppliers(@PathVariable Integer id){
         return materialService.getSuppliers(id);
     }
-    @PostMapping("addMaterial/{wareHouseId}")
+    @PostMapping("addMaterial/departmentName")
     public void addMaterial(@RequestBody Material material,
-                            @PathVariable Integer wareHouseId){
-        materialService.addMaterial(material,wareHouseId);
+                            @PathVariable String departmentName){
+        materialService.addMaterial(material,departmentName);
     }
-    @PostMapping("addSupplier/{supplierId}/{materialId}")
-    public void addSupplier(@PathVariable Integer supplierId,
+    @PostMapping("addSupplier/{supplierUserName}/{materialId}")
+    public void addSupplier(@PathVariable String supplierUserName,
                             @PathVariable Integer materialId,
                             @RequestBody MaterialSupplier materialSupplier){
-        materialService.addSupplier(supplierId,materialId,materialSupplier);
+        materialService.addSupplier(supplierUserName,materialId,materialSupplier);
     }
     @DeleteMapping("deleteById/{id}")
     public void deleteById(@PathVariable Integer id){

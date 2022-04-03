@@ -38,15 +38,15 @@ public class OrderController {
     public List<OrderProducts> getOrderProducts(@PathVariable Integer orderId){
         return orderService.getOrdersProducts(orderId);
     }
-    @GetMapping("getCard/{customerId}")
-    public Order getCart(@PathVariable Integer customerId){
-        return orderService.getCard(customerId);
+    @GetMapping("getCard/{userName}")
+    public Order getCart(@PathVariable String userName){
+        return orderService.getCard(userName);
     }
 
-    @PostMapping("addOrder/{customerId}")
-    public void addOrder(@PathVariable Integer customerId,
+    @PostMapping("addOrder/{userName}")
+    public void addOrder(@PathVariable String userName,
                          @RequestBody Order order){
-        orderService.addOrder(customerId, order);
+        orderService.addOrder(userName, order);
     }
     @PostMapping("addProductToOrder/{productId}/{orderId}")
     public void addProductToOrder(@PathVariable Integer productId,

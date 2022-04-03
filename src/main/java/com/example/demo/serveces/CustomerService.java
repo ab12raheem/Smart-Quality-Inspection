@@ -56,15 +56,12 @@ public class CustomerService {
         return customer.get();
     }
 
-    public void addCustomer(Customer customer, Integer userId) {
-        Optional<User> user = userRepo.findById(userId);
+    public void addCustomer(Customer customer) {
+        Optional<User> user = userRepo.findById(customer.getUser().getId());
 
-        if (!user.isPresent()) {
-            throw new IllegalStateException("user not found");
+        if (user.isPresent()) {
+            throw new IllegalStateException("user used before");
 
-        }
-        if (user.get().getRole() != 0) {
-            throw new IllegalStateException("user has been used before");
         }
         User user1 = user.get();
         user1.setRole(2);
@@ -73,21 +70,22 @@ public class CustomerService {
         customerRepo.save(customer);
     }
 
-    public void deleteById(Integer id) {
-        Optional<Customer> customer=customerRepo.findById(id);
+    /*public void deleteById(String userName) {
+        Optional <User> user=userRepo.getByUserName(userName);
+        if(!user.isPresent()){
+            throw new IllegalStateException("user not found");
+        }
+        Optional<Customer> customer=customerRepo.findByUser(user.get());
 
 
         if(!customer.isPresent()){
             throw new IllegalStateException("customer not found ");
         }
-        Optional<User>user=userRepo.findById(customer.get().getUser().getId());
-        if(!user.isPresent()){
-            throw new IllegalStateException("user not found ");
-        }
-        customerRepo.deleteById(id);
+
+        customerRepo.delete(customer.get());
         userRepo.delete(user.get());
     }
-
+*/
     public void deleteByUserName(String userName) {
         Optional<User>user=userRepo.getByUserName(userName);
         if(!user.isPresent()){
@@ -101,42 +99,41 @@ public class CustomerService {
         userRepo.delete(user.get());
     }
     @Transactional
-    public void updateCustomer(Integer id, String address, String phoneNumber,
+    public void updateCustomer(String userName, String address, String phoneNumber,
                                String postalCode, String cardId, String creditCard) {
-        Optional<Customer>customer=customerRepo.findById(id);
-        if(!customer.isPresent()){
-            throw new IllegalStateException("customer not found");
-        }
+
+        Customer customer=getByUserName(userName);
+
         if(address!=null &&
                 address.length()>0&&
-                !Objects.equals(customer.get().getAddress(),address)){
-            customer.get().setAddress(address);
+                !Objects.equals(customer.getAddress(),address)){
+            customer.setAddress(address);
         }
         if(phoneNumber!=null &&
                 phoneNumber.length()>0&&
-                !Objects.equals(customer.get().getPhoneNumber(),phoneNumber)){
-            customer.get().setPhoneNumber(phoneNumber);
+                !Objects.equals(customer.getPhoneNumber(),phoneNumber)){
+            customer.setPhoneNumber(phoneNumber);
         }
         if(cardId!=null &&
                 cardId.length()>0&&
-                !Objects.equals(customer.get().getCardID(),cardId)){
-            customer.get().setCardID(cardId);
+                !Objects.equals(customer.getCardID(),cardId)){
+            customer.setCardID(cardId);
         }
         if(creditCard!=null &&
                 creditCard.length()>0&&
-                !Objects.equals(customer.get().getCreditCard(),creditCard)){
-            customer.get().setCreditCard(creditCard);
+                !Objects.equals(customer.getCreditCard(),creditCard)){
+            customer.setCreditCard(creditCard);
         }
         if(postalCode!=null &&
                 postalCode.length()>0&&
-                !Objects.equals(customer.get().getPostalCode(),postalCode)){
-            customer.get().setPostalCode(postalCode);
+                !Objects.equals(customer.getPostalCode(),postalCode)){
+            customer.setPostalCode(postalCode);
         }
 
     }
 
-    public List<Order> getOrdersInProgress(Integer id) {
-        Customer customer=getById(id);
+    public List<Order> getOrdersInProgress(String userName) {
+        Customer customer=getByUserName(userName);
         List<Order>orders=orderRepo.findAllByCustomer(customer);
         long millis=System.currentTimeMillis();
         Date date = new Date(millis);
@@ -148,8 +145,8 @@ public class CustomerService {
         }
         return orders;
     }
-    public List<Order> getOrdersDone(Integer id) {
-        Customer customer=getById(id);
+    public List<Order> getOrdersDone(String userName) {
+        Customer customer=getByUserName(userName);
         List<Order>orders=orderRepo.findAllByCustomer(customer);
         long millis=System.currentTimeMillis();
         Date date = new Date(millis);
@@ -161,8 +158,8 @@ public class CustomerService {
         }
         return orders;
     }
-    public List<Order> getOrders(Integer id) {
-        Customer customer=getById(id);
+    public List<Order> getOrders(String userName) {
+        Customer customer=getByUserName(userName);
         List<Order>orders=orderRepo.findAllByCustomer(customer);
         return orders;
     }

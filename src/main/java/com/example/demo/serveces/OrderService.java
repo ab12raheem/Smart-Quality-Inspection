@@ -73,8 +73,9 @@ public class OrderService {
         return orders;
     }
 
-    public void addOrder(Integer customerId, Order order) {
-        Customer customer=customerService.getById(customerId);
+    public void addOrder(String userName, Order order) {
+
+        Customer customer=customerService.getByUserName(userName);
         order.setCustomer(customer);
         customerRepo.save(customer);
         orderRepo.save(order);
@@ -103,8 +104,9 @@ public class OrderService {
         orderRepo.delete(order);
     }
 
-    public Order getCard(Integer customerId) {
-        Optional<Order>order=orderRepo.getCard(customerId);
+    public Order getCard(String userName) {
+        Customer customer=customerService.getByUserName(userName);
+        Optional<Order>order=orderRepo.getCard(customer.getId());
         if(!order.isPresent()){
             throw new IllegalStateException("there is no card");
 

@@ -39,9 +39,8 @@ public class EmployeeService {
         }
         return employeeRepo.findById(id).get();
     }
-
-    public void addEmployee(Employee employee,Integer departmentId,Integer userId) {
-        Optional<User>user=userRepo.findById(userId);
+    public void addEmployee(Employee employee,Integer departmentId) {
+        Optional<User>user=userRepo.findById(employee.getUser().getId());
         Optional<Department>department=departmentRepo.findById(departmentId);
         if(!user.isPresent()){
             throw new IllegalStateException("user not found");
@@ -59,11 +58,10 @@ public class EmployeeService {
         Department department1=department.get();
         employee.setUser(user1);
         employee.setDepartment(department1);
-        employee.setRole(1);
         employeeRepo.save(employee);
     }
 
-
+/*
     public void addHeadEmployee(Employee employee, Integer departmentId, Integer userId) {
 
         Optional<User>user=userRepo.findById(userId);
@@ -87,7 +85,7 @@ public class EmployeeService {
         employee.setRole(2);
         employeeRepo.save(employee);
     }
-
+*/
     public void addAdmin(Employee employee, Integer departmentId, Integer userId) {
         Optional<User>user=userRepo.findById(userId);
         Optional<Department>department=departmentRepo.findById(departmentId);
@@ -179,26 +177,24 @@ public class EmployeeService {
 
     }
     @Transactional
-    public void updateEmployee(Integer id, Date startingDate, Integer salary, Integer departmentId,Integer role) {
-        Optional<Employee>employee=employeeRepo.findById(id);
-        if(!employee.isPresent()){
-            throw new IllegalStateException("employee not found");
-        }
+    public void updateEmployee(String userName, Date startingDate, Integer salary, Integer departmentId,Integer role) {
+        Employee employee=getByUserName(userName);
+
         if(startingDate!=null &&
-                !Objects.equals(employee.get().getStartingDate(),startingDate)){
-            employee.get().setStartingDate(startingDate);
+                !Objects.equals(employee.getStartingDate(),startingDate)){
+            employee.setStartingDate(startingDate);
         }
         if(salary!=null &&
-                !Objects.equals(employee.get().getSalary(),salary)){
-            employee.get().setSalary(salary);
+                !Objects.equals(employee.getSalary(),salary)){
+            employee.setSalary(salary);
         }
         if(role!=null &&
-                !Objects.equals(employee.get().getRole(),role)){
-            employee.get().setRole(role);
+                !Objects.equals(employee.getRole(),role)){
+            employee.setRole(role);
         }
         if(departmentId!=null &&
         departmentRepo.existsById(departmentId)){
-            employee.get().setDepartment(departmentRepo.getById(departmentId));
+            employee.setDepartment(departmentRepo.getById(departmentId));
         }
     }
 }

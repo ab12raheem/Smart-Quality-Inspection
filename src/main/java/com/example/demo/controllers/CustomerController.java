@@ -34,42 +34,41 @@ public class CustomerController {
     public Customer getByUserName(@PathVariable String userName){
         return customerService.getByUserName(userName);
     }
-    @GetMapping("getOrdersInProgress/{id}")
-    public List<Order> getOrdersInProgress(@PathVariable Integer id){
-        return customerService.getOrdersInProgress(id);
+    @GetMapping("getOrdersInProgress/{userName}")
+    public List<Order> getOrdersInProgress(@PathVariable String userName){
+        return customerService.getOrdersInProgress(userName);
     }
-    @GetMapping("getOrderDone/{id}")
-    public List<Order> getOrdersDone(@PathVariable Integer id){
-        return customerService.getOrdersDone(id);
+    @GetMapping("getOrderDone/{userName}")
+    public List<Order> getOrdersDone(@PathVariable String userName){
+        return customerService.getOrdersDone(userName);
     }
-    @GetMapping("getAllOrders/{id}")
-    public List<Order> getOrders(@PathVariable Integer id){
-        return customerService.getOrders(id);
+    @GetMapping("getAllOrders/{userName}")
+    public List<Order> getOrders(@PathVariable String userName){
+        return customerService.getOrders(userName);
     }
 
-    @PostMapping("addCustomer/{userId}")
-    public void addCustomer(@PathVariable Integer userId,
-                            @RequestBody Customer customer){
-        customerService.addCustomer(customer,userId);
+    @PostMapping("addCustomer")
+    public void addCustomer(@RequestBody Customer customer){
+        customerService.addCustomer(customer);
 
     }
-    @DeleteMapping("deleteById/{id}")
+    /*@DeleteMapping("deleteById/{id}")
     public void deleteById(@PathVariable Integer id){
         customerService.deleteById(id);
-    }
+    }*/
     @DeleteMapping("deleteByUserName/{userName}")
     public void deleteById(@PathVariable String userName){
         customerService.deleteByUserName(userName);
     }
-    @PutMapping("updateById/{id}")
+    @PutMapping("updateByUserName/{userName}")
     public void updateCustomer(
-            @PathVariable  Integer id ,
+            @PathVariable  String userName ,
             @RequestParam (required = false) String address,
             @RequestParam (required = false) String postalCode,
             @RequestParam (required = false) String phoneNumber,
             @RequestParam (required = false) String  creditCard,
             @RequestParam (required = false) String cardId){
-                customerService.updateCustomer(id,address,phoneNumber,postalCode,cardId,creditCard);
+                customerService.updateCustomer(userName,address,phoneNumber,postalCode,cardId,creditCard);
 
     }
 

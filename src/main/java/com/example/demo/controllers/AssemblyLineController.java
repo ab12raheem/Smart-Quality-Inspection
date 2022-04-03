@@ -23,9 +23,9 @@ public class AssemblyLineController {
     public List<AssemblyLine> getAll(){
         return assemblyLineService.getAll();
     }
-    @GetMapping("byId/{id}")
-    public AssemblyLine getById(@PathVariable Integer id){
-        return assemblyLineService.getById(id);
+    @GetMapping("byName/{name}")
+    public AssemblyLine getByName(@PathVariable String name){
+        return assemblyLineService.getByName(name);
     }
     @GetMapping("byDepartmentId/{departmentId}")
     public AssemblyLine getByDepartmentId(@PathVariable Integer departmentId){
@@ -35,24 +35,24 @@ public class AssemblyLineController {
     public AssemblyLine getByStage(@PathVariable String stage){
         return assemblyLineService.getByStage(stage);
     }
-    @GetMapping("getEmployees/{id}")
-    public Set<Employee>getEmployees(@PathVariable Integer id){
-        return assemblyLineService.getEmployees(id);
+    @GetMapping("getEmployees/{name}")
+    public Set<Employee>getEmployees(@PathVariable String name){
+        return assemblyLineService.getEmployees(name);
     }
     @PostMapping("add/{departmentId}")
     public void addAssemblyLine(@PathVariable Integer departmentId,
                              @RequestBody  AssemblyLine assemblyLine){
         assemblyLineService.addAssemblyLine(departmentId,assemblyLine);
     }
-    @DeleteMapping("deleteById/{id}")
-    public void deleteById(@PathVariable Integer id){
-        assemblyLineService.deleteById(id);
+    @DeleteMapping("deleteById/{name}")
+    public void deleteById(@PathVariable String name){
+        assemblyLineService.deleteByName(name);
     }
-    @PutMapping("update/{id}")
-    public void updateAssemblyLine(@PathVariable Integer id,
+    @PutMapping("update/{name}")
+    public void updateAssemblyLine(@PathVariable String name,
                                 @RequestParam  String stage
     ){
-        assemblyLineService.updateAssemblyLine(id,stage);
+        assemblyLineService.updateAssemblyLine(name,stage);
     }
 
 }
