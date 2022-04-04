@@ -37,8 +37,8 @@ public class WareHouseService {
 
     }
 
-    public WareHouse getByDepartmentId(Integer departmentId) {
-        Optional<Department>department=departmentRepo.findById(departmentId);
+    public WareHouse getByDepartmentName(String name) {
+        Optional<Department>department=departmentRepo.findByName(name);
         if(!department.isPresent()){
             throw new IllegalStateException("department not found");
         }
@@ -49,74 +49,58 @@ public class WareHouseService {
         return wareHouse.get();
     }
 
-    public void addWareHouse(Integer departmentId, WareHouse wareHouse) {
-        Optional<Department>department=departmentRepo.findById(departmentId);
-        if(!department.isPresent()){
-            throw new IllegalStateException("department not found");
+    public void addWareHouse( WareHouse wareHouse) {
+        Optional<Department>department=departmentRepo.findByName(wareHouse.getDepartment().getName());
+        if(department.isPresent()){
+            throw new IllegalStateException("department used before");
         }
-        Optional<WareHouse>wareHouse1=wareHouseRepo.findByDepartment(department.get());
-        if(wareHouse1.isPresent()){
 
-            throw new IllegalStateException("departmentId used before");
-        }
-        wareHouse.setDepartment(department.get());
+        wareHouse.setDepartment(wareHouse.getDepartment());
+        departmentRepo.save(wareHouse.getDepartment());
         wareHouseRepo.save(wareHouse);
 
     }
 
-    public Set<Employee> getAllEmployees(Integer id) {
-        Optional<WareHouse>wareHouse=wareHouseRepo.findById(id);
-        if(!wareHouse.isPresent()){
-            throw new IllegalStateException("wareHouse not found");
-        }
-        return wareHouse.get().getDepartment().getEmployeeSet();
+    public Set<Employee> getAllEmployees(String name) {
+        WareHouse wareHouse=getByDepartmentName(name);
+
+        return wareHouse.getDepartment().getEmployeeSet();
     }
 
-    public Set<Material> getMaterials(Integer id) {
-        Optional<WareHouse>wareHouse=wareHouseRepo.findById(id);
-        if(!wareHouse.isPresent()){
-            throw new IllegalStateException("wareHouse not found");
-        }
-        return wareHouse.get().getMaterials();
+    public Set<Material> getMaterials(String name) {
+        WareHouse wareHouse=getByDepartmentName(name);
+        return wareHouse.getMaterials();
 
     }
-    public Set<Product> getProducts(Integer id) {
-        Optional<WareHouse>wareHouse=wareHouseRepo.findById(id);
-        if(!wareHouse.isPresent()){
-            throw new IllegalStateException("wareHouse not found");
-        }
-        return wareHouse.get().getProducts();
+    public Set<Product> getProducts(String name) {
+       WareHouse wareHouse=getByDepartmentName(name);
+        return wareHouse.getProducts();
 
     }
 
-    public void deleteById(Integer id) {
-        Optional<WareHouse>wareHouse=wareHouseRepo.findById(id);
-        if(!wareHouse.isPresent()){
-            throw new IllegalStateException("warehouse not found");
-        }
+    public void deleteByName(String name) {
+        WareHouse wareHouse=getByDepartmentName(name);
 
-        Set<Product> products=wareHouse.get().getProducts();
+
+        Set<Product> products=wareHouse.getProducts();
         for(Product product: products){
             product.setWareHouse(null);
         }
-        Set<Material> materials=wareHouse.get().getMaterials();
+        Set<Material> materials=wareHouse.getMaterials();
         for(Material material: materials){
             System.out.println(material.toString());
             material.setWareHouse(null);
         }
-        wareHouseRepo.delete(wareHouse.get());
-        departmentService.deleteByName(wareHouse.get().getDepartment().getName());
+        wareHouseRepo.delete(wareHouse);
+        departmentService.deleteByName(wareHouse.getDepartment().getName());
 
     }
     @Transactional
-    public void updateWareHouse(Integer id, Integer capacity) {
-        Optional<WareHouse>wareHouse=wareHouseRepo.findById(id);
-        if(!wareHouse.isPresent()){
-            throw new IllegalStateException("wareHouse not found");
-        }
+    public void updateWareHouse(String name, Integer capacity) {
+        WareHouse wareHouse=getByDepartmentName(name);
         if(capacity!=null &&
-                !Objects.equals(wareHouse.get().getCapacity(), capacity)){
-            wareHouse.get().setCapacity(capacity);
+                !Objects.equals(wareHouse.getCapacity(), capacity)){
+            wareHouse.setCapacity(capacity);
         }
 
     }

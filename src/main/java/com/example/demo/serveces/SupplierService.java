@@ -48,17 +48,16 @@ public class SupplierService {
         return supplier.get();
     }
 
-    public void addSupplier(Integer userId, Supplier supplier) {
-        Optional<User>user=userRepo.findById(userId);
+    public void addSupplier( Supplier supplier) {
 
-        if(!user.isPresent()){
-            throw new IllegalStateException("user not found");
+        Optional<User> user = userRepo.getByUserName(supplier.getUser().getUserName());
 
-        }
-
-        if(user.get().getRole()!=0){
+        if(user.isPresent()){
             throw new IllegalStateException("user has been used before");
+
         }
+
+
         User user1=user.get();
         user1.setRole(3);
         userRepo.save(user1);
@@ -101,52 +100,50 @@ public class SupplierService {
         userRepo.delete(user.get());
     }
     @Transactional
-    public void updateSupplier(Integer id, String companyName, String address,
+    public void updateSupplier(String userName, String companyName, String address,
                                String postalCode, String phoneNumber, String fax,
                                String paymentMethode, String discountType) {
-        Optional<Supplier>supplier=supplierRepo.findById(id);
-        if(!supplier.isPresent()){
-            throw new IllegalStateException("customer not found");
-        }
+        Supplier supplier=getByUserName(userName);
+
         if(address!=null &&
                 address.length()>0&&
-                !Objects.equals(supplier.get().getAddress(),address)){
-            supplier.get().setAddress(address);
+                !Objects.equals(supplier.getAddress(),address)){
+            supplier.setAddress(address);
         }
         if(phoneNumber!=null &&
                 phoneNumber.length()>0&&
-                !Objects.equals(supplier.get().getPhoneNumber(),phoneNumber)){
-            supplier.get().setPhoneNumber(phoneNumber);
+                !Objects.equals(supplier.getPhoneNumber(),phoneNumber)){
+            supplier.setPhoneNumber(phoneNumber);
         }
         if(companyName!=null &&
                 companyName.length()>0&&
-                !Objects.equals(supplier.get().getCompanyName(),companyName)){
-            supplier.get().setCompanyName(companyName);
+                !Objects.equals(supplier.getCompanyName(),companyName)){
+            supplier.setCompanyName(companyName);
         }
         if(postalCode!=null &&
                 postalCode.length()>0&&
-                !Objects.equals(supplier.get().getPostalCode(),postalCode)){
-            supplier.get().setPostalCode(postalCode);
+                !Objects.equals(supplier.getPostalCode(),postalCode)){
+            supplier.setPostalCode(postalCode);
         }
         if(paymentMethode!=null &&
                 paymentMethode.length()>0&&
-                !Objects.equals(supplier.get().getPaymentMethode(),paymentMethode)){
-            supplier.get().setPaymentMethode(paymentMethode);
+                !Objects.equals(supplier.getPaymentMethode(),paymentMethode)){
+            supplier.setPaymentMethode(paymentMethode);
         }
         if(fax!=null &&
                 fax.length()>0&&
-                !Objects.equals(supplier.get().getFax(),fax)){
-            supplier.get().setFax(fax);
+                !Objects.equals(supplier.getFax(),fax)){
+            supplier.setFax(fax);
         }
         if(discountType!=null &&
                 discountType.length()>0&&
-                !Objects.equals(supplier.get().getDiscountType(),discountType)){
-            supplier.get().setDiscountType(discountType);
+                !Objects.equals(supplier.getDiscountType(),discountType)){
+            supplier.setDiscountType(discountType);
         }
     }
 
-    public List<MaterialSupplier> getMaterials(Integer id) {
-        Supplier supplier=getById(id);
+    public List<MaterialSupplier> getMaterials(String userName) {
+        Supplier supplier=getByUserName(userName);
         return materialSupplierRepo.findAllBySupplier(supplier);
     }
 }

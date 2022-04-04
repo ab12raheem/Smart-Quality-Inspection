@@ -28,36 +28,36 @@ public class WareHouseController {
     public WareHouse getById(@PathVariable Integer id){
         return wareHouseService.getById(id);
     }
-    @GetMapping("byDepartmentId/{departmentId}")
-    public WareHouse getByDepartmentId(@PathVariable Integer departmentId){
-        return wareHouseService.getByDepartmentId(departmentId);
+    @GetMapping("byDepartmentName/{departmentName}")
+    public WareHouse getByDepartmentName(@PathVariable String departmentName){
+        return wareHouseService.getByDepartmentName(departmentName);
     }
-    @GetMapping("getEmployees/{id}")
-    public Set<Employee> getEmployees(@PathVariable Integer id){
-        return wareHouseService.getAllEmployees(id);
+    @GetMapping("getEmployees/{name}")
+    public Set<Employee> getEmployees(@PathVariable String name){
+        return wareHouseService.getAllEmployees(name);
     }
-    @GetMapping("getMaterials/{id}")
-    public Set<Material> getMaterials(@PathVariable Integer id){
-        return wareHouseService.getMaterials(id);
+    @GetMapping("getMaterials/{name}")
+    public Set<Material> getMaterials(@PathVariable String name){
+        return wareHouseService.getMaterials(name);
     }
-    @GetMapping("getProducts/{id}")
-    public Set<Product> getProducts(@PathVariable Integer id ){
-        return wareHouseService.getProducts(id);
+    @GetMapping("getProducts/{name}")
+    public Set<Product> getProducts(@PathVariable String name){
+        return wareHouseService.getProducts(name);
     }
-    @PostMapping("add/{departmentId}")
-    public void addWareHouse(@PathVariable Integer departmentId,
+    @PostMapping("add")
+    public void addWareHouse(
                               @RequestBody WareHouse wareHouse){
-        wareHouseService.addWareHouse(departmentId,wareHouse);
+        wareHouseService.addWareHouse(wareHouse);
     }
-    @DeleteMapping("deleteById/{id}")
-    public void deleteById(@PathVariable Integer id){
-        wareHouseService.deleteById(id);
+    @DeleteMapping("deleteByName/{name}")
+    public void deleteByName(@PathVariable String name){
+        wareHouseService.deleteByName(name);
     }
-    @PutMapping("update/{id}")
-    public void updateWareHouse(@PathVariable Integer id,
+    @PutMapping("update/{name}")
+    public void updateWareHouse(@PathVariable String name,
                                 @RequestParam  Integer capacity
                                 ){
-        wareHouseService.updateWareHouse(id,capacity);
+        wareHouseService.updateWareHouse(name,capacity);
     }
 
 

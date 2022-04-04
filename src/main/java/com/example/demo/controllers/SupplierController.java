@@ -28,10 +28,9 @@ public class SupplierController {
     public Supplier getSupplierByUserName(@PathVariable String userName){
         return supplierService.getByUserName(userName);
     }
-    @PostMapping("addSupplier/{userId}")
-    public void addSupplier(@PathVariable Integer userId,
-                            @RequestBody Supplier supplier){
-        supplierService.addSupplier(userId, supplier);
+    @PostMapping("addSupplier")
+    public void addSupplier(@RequestBody Supplier supplier){
+        supplierService.addSupplier( supplier);
     }
     @DeleteMapping("deleteById/{id}")
     public void deleteSupplier(@PathVariable Integer id){
@@ -41,8 +40,8 @@ public class SupplierController {
     public void deleteByUserName(@PathVariable String userName){
         supplierService.deleteByUserName(userName);
     }
-    @PutMapping("updateById/{id}")
-    public void updateSupplier(@PathVariable Integer id,
+    @PutMapping("updateByUserName/{userName}")
+    public void updateSupplier(@PathVariable String userName,
                                @RequestParam (required = false) String companyName,
                                @RequestParam (required = false) String address,
                                @RequestParam (required = false) String postalCode,
@@ -50,12 +49,12 @@ public class SupplierController {
                                @RequestParam (required = false) String fax,
                                @RequestParam (required = false) String paymentMethode,
                                @RequestParam (required = false) String discountType){
-        supplierService.updateSupplier(id,companyName,address,postalCode,phoneNumber,fax,
+        supplierService.updateSupplier(userName,companyName,address,postalCode,phoneNumber,fax,
                 paymentMethode,discountType);
     }
-    @GetMapping("getMaterials/{id}")
-    public List<MaterialSupplier>getMaterials(@PathVariable Integer id){
-        return supplierService.getMaterials(id);
+    @GetMapping("getMaterials/{userName}")
+    public List<MaterialSupplier>getMaterials(@PathVariable String userName){
+        return supplierService.getMaterials(userName);
     }
 
 
