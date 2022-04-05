@@ -1,9 +1,6 @@
 package com.example.demo.serveces;
 
-import com.example.demo.model.EnrolledMaterials;
-import com.example.demo.model.Material;
-import com.example.demo.model.Product;
-import com.example.demo.model.ProductsEnrolled;
+import com.example.demo.model.*;
 import com.example.demo.repositries.EnrolledMaterialsRepo;
 import com.example.demo.repositries.ProductRepo;
 import com.example.demo.repositries.ProductsEnrolledRepo;
@@ -20,12 +17,14 @@ public class ProductService {
     private final EnrolledMaterialsRepo enrolledMaterialsRepo;
     private final ProductsEnrolledRepo productsEnrolledRepo;
     private final MaterialService materialService;
+    private final WareHouseService wareHouseService;
     @Autowired
-    public ProductService(ProductRepo productRepo, EnrolledMaterialsRepo enrolledMaterialsRepo, ProductsEnrolledRepo productsEnrolledRepo, MaterialService materialService) {
+    public ProductService(ProductRepo productRepo, EnrolledMaterialsRepo enrolledMaterialsRepo, ProductsEnrolledRepo productsEnrolledRepo, MaterialService materialService, WareHouseService wareHouseService) {
         this.productRepo = productRepo;
         this.enrolledMaterialsRepo = enrolledMaterialsRepo;
         this.productsEnrolledRepo = productsEnrolledRepo;
         this.materialService = materialService;
+        this.wareHouseService = wareHouseService;
     }
 
     public List<Product> getProducts() {
@@ -84,12 +83,14 @@ public class ProductService {
         productsEnrolledRepo.save(productsEnrolled);
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(Product product,String name) {
+        WareHouse wareHouse=wareHouseService.getByDepartmentName(name);
 
          if(product.getHeight()<0 || product.getHeight()<0
                  ||product.getPrice()<0||product.getEstimatedTime()<0){
              throw new IllegalStateException("invalid input");
          }
+         product.setWareHouse(wareHouse);
          productRepo.save(product);
 
     }
@@ -106,28 +107,27 @@ public class ProductService {
                            String description, Integer width,
                            String photo, Integer height, Integer price) {
         Product product=getById(id);
-        if(estimatedTime>0
-                && estimatedTime!=null){
+        if(estimatedTime!=null &&estimatedTime>0){
             product.setEstimatedTime(estimatedTime);
         }
-        if(width>0
-                && width!=null){
+        if(width!=null
+                &&width>0
+                 ){
             product.setWidth(width);
         }
-        if(height>0
-                && height!=null){
+        if(height!=null&&height>0
+                ){
             product.setHeight(height);
         }
-        if(price>0
-                && price!=null){
+        if(price!=null && price>0
+                ){
             product.setPrice(price);
         }
-        if(description.length()>0
-                && description!=null){
+        if(description!=null && description.length()>0
+                ){
             product.setDescription(description);
         }
-        if(photo.length()>0
-                && photo!=null){
+        if(photo!=null&&photo.length()>0){
             product.setPhoto(photo);
         }
 

@@ -29,7 +29,7 @@ public class MaterialController {
     public List<MaterialSupplier> getSuppliers(@PathVariable Integer id){
         return materialService.getSuppliers(id);
     }
-    @PostMapping("addMaterial/departmentName")
+    @PostMapping("addMaterial/{departmentName}")
     public void addMaterial(@RequestBody Material material,
                             @PathVariable String departmentName){
         materialService.addMaterial(material,departmentName);

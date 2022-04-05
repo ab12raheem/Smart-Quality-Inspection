@@ -56,9 +56,10 @@ public class ProductController {
     {
         productService.addEnrolledProduct(productId,enrolledProductId,productsEnrolled);
     }
-    @PostMapping("addProduct")
-    public void addProduct(@RequestBody Product product){
-        productService.addProduct(product);
+    @PostMapping("addProduct/{wareHouse}")
+    public void addProduct(@RequestBody Product product,
+                           @PathVariable String wareHouse){
+        productService.addProduct(product,wareHouse);
     }
     @DeleteMapping("deleteById/{id}")
     public void deleteProductById(@PathVariable Integer id){

@@ -57,6 +57,9 @@ public class OrderService {
             }
 
         }
+        if(orders.isEmpty()){
+            throw new IllegalStateException("there is nno orders in progress");
+        }
         return orders;
     }
     public List<Order> getOrdersDone() {
@@ -65,10 +68,14 @@ public class OrderService {
         long millis=System.currentTimeMillis();
         Date date = new Date(millis);
         for(Order order : orders){
-            if(order.getOrderDone().toLocalDate().isAfter(date.toLocalDate())){
+            if(order.getOrderDone().toLocalDate().isBefore(date.toLocalDate())){
                 orders.remove(order);
             }
 
+
+        }
+        if(orders.isEmpty()){
+            throw new IllegalStateException("there is nno orders done");
         }
         return orders;
     }

@@ -33,7 +33,7 @@ public class DepartmentController {
     public void deleteByName(@PathVariable String name){
         departmentService.deleteByName(name);
     }
-    @PutMapping("update/{name}")
+    @PutMapping("update/{name1}")
     public void updateDepartment(@PathVariable String name1,
                                  @RequestParam (required = false) String phone,
                                  @RequestParam (required = false) String fax,

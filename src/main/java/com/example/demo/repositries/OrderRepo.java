@@ -14,7 +14,7 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
     List<Order> findAllByCustomer(Customer customer);
 
     List<Order> findAllByActivate(Boolean Activate);
-    @Query(value = "SELECT * FROM ORDER WHERE customer_id= ?1 and activate=false",
+    @Query(value = "SELECT * FROM public.order WHERE customer_id= ?1 and activate=false",
     nativeQuery = true)
     Optional<Order> getCard(Integer customerId);
 }
