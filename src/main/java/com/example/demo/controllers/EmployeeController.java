@@ -37,14 +37,14 @@ public class EmployeeController {
     public Employee getByUserName(@PathVariable String userName){
         return employeeService.getByUserName(userName);
     }
-    @GetMapping("byDepartment/{departmentId}")
-    public List<Employee> getByDepartment(@PathVariable Integer departmentId){
-        return employeeService.getByDepartment(departmentId);
+    @GetMapping("byDepartment/{departmentName}")
+    public List<Employee> getByDepartment(@PathVariable String departmentName ){
+        return employeeService.getByDepartment(departmentName);
     }
-    @GetMapping("byDepartmentAndRole/{departmentId}/{role}")
-    public List<Employee> getByDepartment(@PathVariable Integer departmentId,
+    @GetMapping("byDepartmentAndRole/{departmentName}/{role}")
+    public List<Employee> getByDepartment(@PathVariable String departmentName,
                                           @PathVariable Integer role){
-        return employeeService.getByDepartmentAndRole(departmentId,role);
+        return employeeService.getByDepartmentAndRole(departmentName,role);
     }
     @GetMapping("BySalary/{salary}")
     public List<Employee> getBySalary(@PathVariable Integer salary){
@@ -59,11 +59,11 @@ public class EmployeeController {
         employeeService.deleteByUserName(userName);
     }
 
-    @PostMapping("/addEmployee/{departmentId}")
+    @PostMapping("/addEmployee/{departmentName}")
     public void addEmployee(@RequestBody Employee employee,
-                            @PathVariable Integer departmentId){
+                            @PathVariable String departmentName){
 
-        employeeService.addEmployee(employee,departmentId);
+        employeeService.addEmployee(employee,departmentName);
     }/*
     @PostMapping("/addHeadEmployee/{departmentId}/{userId}")
     public void addHeadEmployee(@RequestBody Employee employee,

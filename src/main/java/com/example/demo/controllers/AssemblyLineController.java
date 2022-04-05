@@ -39,10 +39,9 @@ public class AssemblyLineController {
     public Set<Employee>getEmployees(@PathVariable String name){
         return assemblyLineService.getEmployees(name);
     }
-    @PostMapping("add/{departmentId}")
-    public void addAssemblyLine(@PathVariable Integer departmentId,
-                             @RequestBody  AssemblyLine assemblyLine){
-        assemblyLineService.addAssemblyLine(departmentId,assemblyLine);
+    @PostMapping("add")
+    public void addAssemblyLine(@RequestBody  AssemblyLine assemblyLine){
+        assemblyLineService.addAssemblyLine(assemblyLine);
     }
     @DeleteMapping("deleteById/{name}")
     public void deleteById(@PathVariable String name){

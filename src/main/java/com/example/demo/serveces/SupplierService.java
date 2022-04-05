@@ -51,17 +51,22 @@ public class SupplierService {
     public void addSupplier( Supplier supplier) {
 
         Optional<User> user = userRepo.getByUserName(supplier.getUser().getUserName());
+        Optional<User> user1 = userRepo.getByEmail(supplier.getUser().getEmail());
 
         if(user.isPresent()){
-            throw new IllegalStateException("user has been used before");
+            throw new IllegalStateException("userName has been used before");
+
+        }
+        if(user1.isPresent()){
+            throw new IllegalStateException("email has been used before");
 
         }
 
 
-        User user1=user.get();
-        user1.setRole(3);
-        userRepo.save(user1);
-        supplier.setUser(user1);
+
+        supplier.getUser().setRole(3);
+        userRepo.save(supplier.getUser());
+        supplier.setUser(supplier.getUser());
         supplierRepo.save(supplier);
     }
 

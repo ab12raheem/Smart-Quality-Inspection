@@ -43,7 +43,7 @@ public class WareHouseService {
             throw new IllegalStateException("department not found");
         }
         Optional<WareHouse>wareHouse=wareHouseRepo.findByDepartment(department.get());
-        if(wareHouse.isPresent()){
+        if(!wareHouse.isPresent()){
             throw new IllegalStateException("wareHouse not found");
         }
         return wareHouse.get();

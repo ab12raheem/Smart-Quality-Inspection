@@ -57,16 +57,21 @@ public class CustomerService {
     }
 
     public void addCustomer(Customer customer) {
-        Optional<User> user = userRepo.findById(customer.getUser().getId());
+        Optional<User> user = userRepo.getByUserName(customer.getUser().getUserName());
+        Optional<User>user1=userRepo.getByEmail(customer.getUser().getEmail());
 
         if (user.isPresent()) {
-            throw new IllegalStateException("user used before");
+            throw new IllegalStateException("userName used before");
 
         }
-        User user1 = user.get();
-        user1.setRole(2);
-        userRepo.save(user1);
-        customer.setUser(user1);
+        if (user1.isPresent()) {
+            throw new IllegalStateException("Email used before");
+
+        }
+
+        customer.getUser().setRole(2);
+        userRepo.save(customer.getUser());
+        customer.setUser(customer.getUser());
         customerRepo.save(customer);
     }
 

@@ -73,17 +73,14 @@ public class AssemblyLineService {
         return assemblyLine.get().getDepartment().getEmployeeSet();
     }
 
-    public void addAssemblyLine(Integer departmentId, AssemblyLine assemblyLine) {
-        Optional<Department>department=departmentRepo.findById(departmentId);
-        if(!department.isPresent()){
-            throw new IllegalStateException("department not found");
+    public void addAssemblyLine( AssemblyLine assemblyLine) {
+        Optional<Department>department=departmentRepo.findByName(assemblyLine.getDepartment().getName());
+        if(department.isPresent()){
+            throw new IllegalStateException("department exists ");
         }
-        Optional<AssemblyLine>assemblyLine1=assemblyLineRepo.findByDepartment(department.get());
-        if(assemblyLine1.isPresent()){
 
-            throw new IllegalStateException("departmentId used before");
-        }
-        assemblyLine.setDepartment(department.get());
+        departmentRepo.save(assemblyLine.getDepartment());
+        assemblyLine.setDepartment(assemblyLine.getDepartment());
         assemblyLineRepo.save(assemblyLine);
     }
 

@@ -39,24 +39,29 @@ public class EmployeeService {
         }
         return employeeRepo.findById(id).get();
     }
-    public void addEmployee(Employee employee,Integer departmentId) {
-        Optional<User>user=userRepo.findById(employee.getUser().getId());
-        Optional<Department>department=departmentRepo.findById(departmentId);
-        if(!user.isPresent()){
-            throw new IllegalStateException("user not found");
+    public void addEmployee(Employee employee,String departmentName) {
+
+        Optional<User>user=userRepo.getByUserName(employee.getUser().getUserName());
+        Optional<User>user1=userRepo.getByEmail(employee.getUser().getEmail());
+
+        Optional<Department>department=departmentRepo.findByName(departmentName);
+        if(user.isPresent()){
+            throw new IllegalStateException("userName used before");
+
+        }
+        if(user1.isPresent()){
+            throw new IllegalStateException("email used before");
 
         }
         if(!department.isPresent()){
             throw new IllegalStateException("department not found");
         }
-        if(user.get().getRole()!=0){
-            throw new IllegalStateException("user has been used before");
-        }
-        User user1=user.get();
-        user1.setRole(1);
-        userRepo.save(user1);
+
+
+        employee.getUser().setRole(1);
+        userRepo.save(employee.getUser());
         Department department1=department.get();
-        employee.setUser(user1);
+        employee.setUser(employee.getUser());
         employee.setDepartment(department1);
         employeeRepo.save(employee);
     }
@@ -126,16 +131,16 @@ public class EmployeeService {
         return employeeOptional.get();
     }
 
-    public List<Employee> getByDepartment(Integer departmentID) {
-        Optional<Department>department=departmentRepo.findById(departmentID);
+    public List<Employee> getByDepartment(String departmentName) {
+        Optional<Department>department=departmentRepo.findByName(departmentName);
         if(!department.isPresent()){
             throw new IllegalStateException("employee not found");
         }
         return employeeRepo.findAllByDepartment(department.get());
     }
 
-    public List<Employee> getByDepartmentAndRole(Integer departmentID, Integer role) {
-        Optional<Department>department=departmentRepo.findById(departmentID);
+    public List<Employee> getByDepartmentAndRole(String departmentName, Integer role) {
+        Optional<Department>department=departmentRepo.findByName(departmentName);
         if(!department.isPresent()){
             throw new IllegalStateException("employee not found");
         }
