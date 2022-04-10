@@ -18,11 +18,13 @@ public class CustomerService {
     private final CustomerRepo customerRepo;
     private final UserRepo userRepo;
     private final OrderRepo orderRepo;
+    private final UserService userService;
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo) {
+    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo, UserService userService) {
         this.customerRepo = customerRepo;
         this.userRepo = userRepo;
         this.orderRepo = orderRepo;
+        this.userService = userService;
     }
 
     public List<Customer> geAllCustomers() {
@@ -69,8 +71,8 @@ public class CustomerService {
 
         }
 
-        customer.getUser().setRole(2);
-        userRepo.save(customer.getUser());
+
+        userService.addUser(customer.getUser());
         customer.setUser(customer.getUser());
         customerRepo.save(customer);
     }

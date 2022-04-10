@@ -20,11 +20,13 @@ public class EmployeeService {
     private final EmployeeRepo employeeRepo;
     private final UserRepo userRepo;
     private final DepartmentRepo departmentRepo;
+    private final UserService userService;
     @Autowired
-    public EmployeeService(EmployeeRepo employeeRepo, UserRepo userRepo, DepartmentRepo departmentRepo) {
+    public EmployeeService(EmployeeRepo employeeRepo, UserRepo userRepo, DepartmentRepo departmentRepo, UserService userService) {
         this.employeeRepo = employeeRepo;
         this.userRepo = userRepo;
         this.departmentRepo = departmentRepo;
+        this.userService = userService;
     }
 
     public List<Employee> getEmployees() {
@@ -58,8 +60,8 @@ public class EmployeeService {
         }
 
 
-        employee.getUser().setRole(1);
-        userRepo.save(employee.getUser());
+
+        userService.addUser(employee.getUser());
         Department department1=department.get();
         employee.setUser(employee.getUser());
         employee.setDepartment(department1);
@@ -90,7 +92,7 @@ public class EmployeeService {
         employee.setRole(2);
         employeeRepo.save(employee);
     }
-*/
+
     public void addAdmin(Employee employee, Integer departmentId, Integer userId) {
         Optional<User>user=userRepo.findById(userId);
         Optional<Department>department=departmentRepo.findById(departmentId);
@@ -101,10 +103,9 @@ public class EmployeeService {
         if(!department.isPresent()){
             throw new IllegalStateException("department not found");
         }
-        if(user.get().getRole()!=0){
-            throw new IllegalStateException("user has been used before");
-        }
+
         User user1=user.get();
+
         user1.setRole(1);
         userRepo.save(user1);
         Department department1=department.get();
@@ -113,7 +114,7 @@ public class EmployeeService {
         employee.setRole(3);
         employeeRepo.save(employee);
     }
-
+*/
     public List<Employee> getByRole(Integer role) {
         return employeeRepo.findAllByRole(role);
 

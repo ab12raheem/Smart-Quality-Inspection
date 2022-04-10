@@ -5,6 +5,7 @@ import com.example.demo.serveces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,10 @@ public class UserController {
 
 
     }
+    /*@PostConstruct
+    public void initRoleAndUser() {
+        userService.initRoleAndUser();
+    }*/
     @PostMapping("/addUser")
     public void addUser(@RequestBody User user){
         userService.addUser(user);
@@ -43,9 +48,8 @@ public class UserController {
                           @RequestParam (required = false) String email,
                           @RequestParam (required = false) String password,
                           @RequestParam (required = false) String userName1,
-                          @RequestParam (required = false)Date dop,
-                          @RequestParam (required = false) Integer role){
-    userService.updateUser(userName,firstName,lastName,email,password,userName1,dop,role);
+                          @RequestParam (required = false)Date dop){
+    userService.updateUser(userName,firstName,lastName,email,password,userName1,dop);
 
     }
 

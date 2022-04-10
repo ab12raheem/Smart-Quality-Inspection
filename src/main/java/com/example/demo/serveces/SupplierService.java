@@ -17,11 +17,13 @@ public class SupplierService {
     private final SupplierRepo supplierRepo;
     private final UserRepo userRepo;
     private final MaterialSupplierRepo materialSupplierRepo;
+    private final UserService userService;
     @Autowired
-    public SupplierService(SupplierRepo supplierRepo, UserRepo userRepo, MaterialSupplierRepo materialSupplierRepo) {
+    public SupplierService(SupplierRepo supplierRepo, UserRepo userRepo, MaterialSupplierRepo materialSupplierRepo, UserService userService) {
         this.supplierRepo = supplierRepo;
         this.userRepo = userRepo;
         this.materialSupplierRepo = materialSupplierRepo;
+        this.userService = userService;
     }
 
     public List<Supplier> getAllSuppliers() {
@@ -64,8 +66,8 @@ public class SupplierService {
 
 
 
-        supplier.getUser().setRole(3);
-        userRepo.save(supplier.getUser());
+
+        userService.addUser(supplier.getUser());
         supplier.setUser(supplier.getUser());
         supplierRepo.save(supplier);
     }

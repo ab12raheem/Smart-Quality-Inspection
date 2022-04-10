@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="user",schema = "public")
@@ -23,7 +25,8 @@ public class User {
     private Date dop;
     @Column(nullable = false)
     private String password;
-    private Integer role;
+    @OneToOne
+    private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
@@ -31,12 +34,23 @@ public class User {
     private Employee employee;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Supplier supplier;
-
+    /*@ManyToMany(fetch =FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_name")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_name")
+            }
+    )
+    private Set<Role> roleSet=new HashSet<>();
+*/
     public User() {
     }
 
     public User(String firstName, String lastName,
-                String userName, String email, Date dop, String password, Integer role) {
+                String userName, String email, Date dop, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
@@ -100,14 +114,22 @@ public class User {
         this.password = password;
     }
 
-    public Integer getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
+  /*  public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
+*/
     @Override
     public String toString() {
         return "User{" +
