@@ -13,6 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/customer")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class CustomerController {
     private final CustomerService customerService;
     @Autowired
@@ -58,7 +60,6 @@ public class CustomerController {
     @PostMapping("addCustomer")
     public void addCustomer(@RequestBody Customer customer){
         customerService.addCustomer(customer);
-
     }
     /*@DeleteMapping("deleteById/{id}")
     public void deleteById(@PathVariable Integer id){

@@ -119,23 +119,54 @@ public class UserService {
 
         Role adminRole = new Role();
         adminRole.setRoleName("Admin");
-
         roleRepo.save(adminRole);
 
-        Role userRole = new Role();
-        userRole.setRoleName("User");
+        Role headRole = new Role();
+        headRole.setRoleName("Head");
+        roleRepo.save(headRole);
+        Role customerRole = new Role();
+        customerRole.setRoleName("Customer");
+        roleRepo.save(customerRole);
 
-        roleRepo.save(userRole);
-
+        Role employeeRole = new Role();
+        employeeRole.setRoleName("Employee");
+        roleRepo.save(employeeRole);
         User adminUser = new User();
         adminUser.setUserName("admin123");
         adminUser.setPassword(getEncodedPassword("admin@pass"));
         adminUser.setFirstName("admin");
         adminUser.setLastName("admin");
-        adminUser.setEmail("email");
-
+        adminUser.setEmail("email@");
         adminUser.setRole(adminRole);
         userRepo.save(adminUser);
+        User employeeUser = new User();
+        employeeUser.setUserName("employee123");
+        employeeUser.setPassword(getEncodedPassword("employee@pass"));
+        employeeUser.setFirstName("employee");
+        employeeUser.setLastName("employee");
+        employeeUser.setEmail("employee@");
+        employeeUser.setRole(employeeRole);
+        userRepo.save(employeeUser);
+        User headUser = new User();
+        headUser.setUserName("head123");
+        headUser.setPassword(getEncodedPassword("head@pass"));
+        headUser.setFirstName("head");
+        headUser.setLastName("head");
+        headUser.setEmail("head@");
+        headUser.setRole(headRole);
+        userRepo.save(headUser);
+        User customerUser = new User();
+        customerUser.setUserName("customer123");
+        customerUser.setPassword(getEncodedPassword("customer@pass"));
+        customerUser.setFirstName("customer");
+        customerUser.setLastName("customer");
+        customerUser.setEmail("customer@");
+        customerUser.setRole(customerRole);
+        userRepo.save(customerUser);
+
+
+
+
 
     }
 }

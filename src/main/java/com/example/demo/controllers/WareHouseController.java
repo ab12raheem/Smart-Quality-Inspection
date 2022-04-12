@@ -15,6 +15,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/wareHouse")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class WareHouseController {
     private final WareHouseService wareHouseService;
     @Autowired

@@ -12,6 +12,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/user")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class UserController {
     private final UserService userService;
     @Autowired
@@ -25,8 +27,6 @@ public class UserController {
     @GetMapping("/ByUserName/{userName}")
     public User getUserByUserName(@PathVariable String userName){
         return userService.getUserByUserName(userName);
-
-
     }
     /*@PostConstruct
     public void initRoleAndUser() {

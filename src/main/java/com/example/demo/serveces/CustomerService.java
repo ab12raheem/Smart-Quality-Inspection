@@ -3,6 +3,7 @@ package com.example.demo.serveces;
 import com.example.demo.model.*;
 import com.example.demo.repositries.CustomerRepo;
 import com.example.demo.repositries.OrderRepo;
+import com.example.demo.repositries.RoleRepo;
 import com.example.demo.repositries.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,14 @@ public class CustomerService {
     private final CustomerRepo customerRepo;
     private final UserRepo userRepo;
     private final OrderRepo orderRepo;
+    private final RoleRepo roleRepo;
     private final UserService userService;
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo, UserService userService) {
+    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo, RoleRepo roleRepo, UserService userService) {
         this.customerRepo = customerRepo;
         this.userRepo = userRepo;
         this.orderRepo = orderRepo;
+        this.roleRepo = roleRepo;
         this.userService = userService;
     }
 
@@ -61,7 +64,7 @@ public class CustomerService {
     public void addCustomer(Customer customer) {
         Optional<User> user = userRepo.getByUserName(customer.getUser().getUserName());
         Optional<User>user1=userRepo.getByEmail(customer.getUser().getEmail());
-
+        Role role=roleRepo.getByRoleName("Customer");
         if (user.isPresent()) {
             throw new IllegalStateException("userName used before");
 
@@ -71,7 +74,7 @@ public class CustomerService {
 
         }
 
-
+        customer.getUser().setRole(role);
         userService.addUser(customer.getUser());
         customer.setUser(customer.getUser());
         customerRepo.save(customer);

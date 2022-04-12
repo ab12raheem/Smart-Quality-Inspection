@@ -40,7 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate",
+                .authorizeRequests().antMatchers("/api/v1/authenticate/authenticate",
                 "/api/v1/customer/addCustomer",
                 "/api/v1/product",
                 "/api/v1/product/ByPriceDesc",

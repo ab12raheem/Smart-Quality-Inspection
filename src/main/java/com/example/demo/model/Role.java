@@ -1,14 +1,22 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "role",schema = "public")
 public class Role {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Integer Id;
+    @Column(unique = true)
     private String roleName;
-    @OneToOne(mappedBy = "role", cascade = CascadeType.ALL)
-    private User user;
+    @OneToMany(mappedBy = "role")
+    @JsonIgnore
+    private Set<User> user = new HashSet<>();
 
     public Role() {
     }

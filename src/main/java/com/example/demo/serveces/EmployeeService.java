@@ -2,9 +2,11 @@ package com.example.demo.serveces;
 
 import com.example.demo.model.Department;
 import com.example.demo.model.Employee;
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repositries.DepartmentRepo;
 import com.example.demo.repositries.EmployeeRepo;
+import com.example.demo.repositries.RoleRepo;
 import com.example.demo.repositries.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,14 @@ public class EmployeeService {
     private final UserRepo userRepo;
     private final DepartmentRepo departmentRepo;
     private final UserService userService;
+    private final RoleRepo roleRepo;
     @Autowired
-    public EmployeeService(EmployeeRepo employeeRepo, UserRepo userRepo, DepartmentRepo departmentRepo, UserService userService) {
+    public EmployeeService(EmployeeRepo employeeRepo, UserRepo userRepo, DepartmentRepo departmentRepo, UserService userService, RoleRepo roleRepo) {
         this.employeeRepo = employeeRepo;
         this.userRepo = userRepo;
         this.departmentRepo = departmentRepo;
         this.userService = userService;
+        this.roleRepo = roleRepo;
     }
 
     public List<Employee> getEmployees() {
@@ -45,7 +49,6 @@ public class EmployeeService {
 
         Optional<User>user=userRepo.getByUserName(employee.getUser().getUserName());
         Optional<User>user1=userRepo.getByEmail(employee.getUser().getEmail());
-
         Optional<Department>department=departmentRepo.findByName(departmentName);
         if(user.isPresent()){
             throw new IllegalStateException("userName used before");
@@ -58,9 +61,22 @@ public class EmployeeService {
         if(!department.isPresent()){
             throw new IllegalStateException("department not found");
         }
+        Role role;
+        if(employee.getRole()==1)
+        {
+             role=roleRepo.getByRoleName("Employee");
+        }
+        else if(employee.getRole()==2){
+             role=roleRepo.getByRoleName("Head");
+        } else if(employee.getRole()==3){
+             role=roleRepo.getByRoleName("Admin");
+        }
+        else{
+            throw new IllegalStateException("role not found");
+        }
 
 
-
+        employee.getUser().setRole(role);
         userService.addUser(employee.getUser());
         Department department1=department.get();
         employee.setUser(employee.getUser());

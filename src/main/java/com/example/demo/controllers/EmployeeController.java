@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/employee")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
@@ -68,7 +69,6 @@ public class EmployeeController {
     public void deleteById(@PathVariable String userName){
         employeeService.deleteByUserName(userName);
     }
-
     @PostMapping("/addEmployee/{departmentName}")
     @PreAuthorize("hasRole('Admin')")
     public void addEmployee(@RequestBody Employee employee,

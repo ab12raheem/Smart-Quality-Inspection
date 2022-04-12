@@ -61,7 +61,7 @@ public class JwtService implements UserDetailsService {
     }
 
     private SimpleGrantedAuthority getAuthority(User user) {
-        SimpleGrantedAuthority authorities = new SimpleGrantedAuthority("ROLE_" + user.getRole());
+        SimpleGrantedAuthority authorities = new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName());
 
         return authorities;
     }

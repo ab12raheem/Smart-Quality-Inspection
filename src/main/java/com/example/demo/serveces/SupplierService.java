@@ -51,7 +51,6 @@ public class SupplierService {
     }
 
     public void addSupplier( Supplier supplier) {
-
         Optional<User> user = userRepo.getByUserName(supplier.getUser().getUserName());
         Optional<User> user1 = userRepo.getByEmail(supplier.getUser().getEmail());
 

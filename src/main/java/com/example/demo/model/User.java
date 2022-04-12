@@ -25,7 +25,8 @@ public class User {
     private Date dop;
     @Column(nullable = false)
     private String password;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id",referencedColumnName = "id")
     private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

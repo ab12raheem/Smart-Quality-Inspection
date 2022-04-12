@@ -13,6 +13,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/assemblyLine")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class AssemblyLineController {
     private final AssemblyLineService assemblyLineService;
     @Autowired

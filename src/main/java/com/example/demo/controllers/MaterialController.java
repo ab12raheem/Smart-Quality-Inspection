@@ -12,6 +12,8 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(path = "api/v1/material")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class MaterialController {
     private final MaterialService materialService;
     @Autowired
