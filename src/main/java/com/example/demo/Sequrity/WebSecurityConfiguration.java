@@ -43,6 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/api/v1/authenticate/authenticate",
                 "/api/v1/customer/addCustomer",
                 "/api/v1/product",
+                "/api/v1/product/byId/{id}",
                 "/api/v1/product/ByPriceDesc",
                 "/api/v1/product/ByPriceAsc").permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
