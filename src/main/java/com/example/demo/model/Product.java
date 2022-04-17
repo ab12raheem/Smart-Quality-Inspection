@@ -40,6 +40,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private Set<OrderProducts> orderProducts = new HashSet<>();
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private Set<CardProducts> cardProducts = new HashSet<>();
+
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -125,6 +129,18 @@ public class Product {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Set<ProductsEnrolled> getProductsEnrolled() {
+        return productsEnrolled;
+    }
+
+    public Set<ProductsEnrolled> getProducts() {
+        return products;
+    }
+
+    public Set<CardProducts> getCardProducts() {
+        return cardProducts;
     }
 
     @Override

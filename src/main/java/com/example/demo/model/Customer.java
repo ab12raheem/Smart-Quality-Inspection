@@ -22,6 +22,8 @@ public class Customer  {
     private String cardID;
     @OneToOne
     private User user;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Card card;
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private Set<Order> orders = new HashSet<>();
@@ -89,6 +91,14 @@ public class Customer  {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Card getCard() {
+        return card;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
     }
 
     @Override

@@ -84,7 +84,7 @@ public class OrderService {
 
         Customer customer=customerService.getByUserName(userName);
         order.setCustomer(customer);
-        customerRepo.save(customer);
+
         orderRepo.save(order);
 
     }

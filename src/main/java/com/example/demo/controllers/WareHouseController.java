@@ -65,7 +65,7 @@ public class WareHouseController {
         wareHouseService.deleteByName(name);
     }
     @PutMapping("update/{name}")
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public void updateWareHouse(@PathVariable String name,
                                 @RequestParam  Integer capacity
                                 ){
