@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/card")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class CardController {
     private final CardService cardService;
 
     public CardController(CardService cardService) {
         this.cardService = cardService;
     }
-    @GetMapping("getCard/userName")
+    @GetMapping("getCard/{userName}")
     public Card getCard(@PathVariable String userName){
         return cardService.getCard(userName);
     }
@@ -21,15 +23,16 @@ public class CardController {
     public CardProducts getProducts(@PathVariable String userName){
         return cardService.getProducts(userName);
     }
-    @PostMapping("addCard/userName")
+    @PostMapping("addCard/{userName}")
     public void addCard(@PathVariable String userName,
                         @RequestBody  Card card){
         cardService.addCard(userName,card);
     }
-    @PostMapping("addProduct/userName")
+    @PostMapping("addProduct/{userName}/{productId}")
     public void addProduct(@PathVariable String userName,
+                           @PathVariable Integer productId,
                            @RequestBody CardProducts cardProducts){
-        cardService.addProduct(userName,cardProducts);
+        cardService.addProduct(userName,cardProducts,productId);
     }
     @PutMapping("activate/userName")
     public void activateCard(@PathVariable String userName){

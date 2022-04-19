@@ -75,7 +75,8 @@ public class OrderService {
 
         }
         if(orders.isEmpty()){
-            throw new IllegalStateException("there is nno orders done");
+            return  null;
+           // throw new IllegalStateException("there is nno orders done");
         }
         return orders;
     }
@@ -115,8 +116,7 @@ public class OrderService {
         Customer customer=customerService.getByUserName(userName);
         Optional<Order>order=orderRepo.getCard(customer.getId());
         if(!order.isPresent()){
-            throw new IllegalStateException("there is no card");
-
+            return null;
         }
         return order.get();
     }

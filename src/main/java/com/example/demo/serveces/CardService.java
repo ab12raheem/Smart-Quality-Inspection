@@ -54,18 +54,20 @@ public class CardService {
         if(card1.isPresent()){
             throw new IllegalStateException("Card existBefore");
         }
-        card1.get().setCustomer(customer);
-        cardRepo.save(card1.get());
+        card.setCustomer(customer);
+        cardRepo.save(card);
     }
 
-    public void addProduct(String userName, CardProducts cardProducts) {
+    public void addProduct(String userName, CardProducts cardProducts, Integer productId) {
         Card card=getCard(userName);
+        Product product=productService.getById(productId);
         Optional<CardProducts> cardProducts1=cardProductsRepo.findByProduct(cardProducts.getProduct());
         if(cardProducts1.isPresent()){
            throw new IllegalStateException("product have been Added before");
 
         }
         cardProducts.setCard(card);
+        cardProducts.setProduct(product);
         cardProductsRepo.save(cardProducts);
     }
     @Transactional
