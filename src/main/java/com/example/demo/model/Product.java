@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,6 +16,7 @@ public class Product {
     private Integer id;
     private Integer estimatedTime;
     private String description;
+    private Integer quantity;
     private Integer height;
     private  Integer width;
     private String photo;
@@ -53,10 +53,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(Integer estimatedTime, String description, Integer height, Integer width, String photo,
-    Integer price) {
+    public Product(Integer estimatedTime, String description, Integer quantity, Integer height, Integer width, String photo,
+                   Integer price) {
         this.estimatedTime = estimatedTime;
         this.description = description;
+        this.quantity = quantity;
         this.height = height;
         this.width = width;
         this.photo = photo;
@@ -167,5 +168,13 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getEstimatedTime(), getDescription(), getHeight(), getWidth(), getPhoto());
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

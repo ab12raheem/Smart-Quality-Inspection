@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CardService {
@@ -43,9 +42,16 @@ public class CardService {
 
     }
 
-    public CardProducts getProducts(String userName) {
+    public List<Product> getProducts(String userName) {
         Card card = getCard(userName);
-        return cardProductsRepo.findAllByCard(card);
+        List<CardProducts> cardProductsSet= cardProductsRepo.findAllByCard(card);
+        List <Product> products=new ArrayList<>();
+        for(CardProducts cardProducts : cardProductsSet){
+            products.add(cardProducts.getProduct());
+
+        }
+        return products;
+
     }
 
     public void addCard(String userName, Card card) {
