@@ -41,15 +41,18 @@ public class CardController {
         cardService.addProduct(userName,cardProducts,productId);
     }
     @PutMapping("activate/{userName}")
+    @PreAuthorize("hasRole('Customer')")
     public void activateCard(@PathVariable String userName){
         cardService.activate(userName);
     }
-    @PutMapping("deleteProduct/userName/productId")
+    @DeleteMapping("deleteProduct/{userName}/{productId}")
+    @PreAuthorize("hasRole('Customer')")
     public void deleteProduct(@PathVariable String  userName,
                               @PathVariable Integer productId){
         cardService.deleteProduct(userName,productId);
     }
-    @PutMapping("updateProduct/userName/productId")
+    @PutMapping("updateProduct/{userName}/{productId}")
+    @PreAuthorize("hasRole('Customer')")
     public void updateProduct(@PathVariable String userName,
                               @PathVariable Integer productId,
                               @RequestParam Integer count){
