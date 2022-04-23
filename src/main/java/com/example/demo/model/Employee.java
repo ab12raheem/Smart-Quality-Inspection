@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Objects;
 @Entity
 @Table(name="employee",schema = "public")
@@ -16,7 +15,7 @@ public class Employee {
     private Date startingDate;
     private Integer salary;
     private Integer role;
-
+    private String image;
     @OneToOne
     private User user;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -27,10 +26,11 @@ public class Employee {
     }
 
     public Employee(Date startingDate, Integer salary
-            , Integer role, User user,Department department) {
+            , Integer role, String image, User user, Department department) {
         this.startingDate = startingDate;
         this.salary = salary;
         this.role = role;
+        this.image = image;
         this.user = user;
         this.department=department;
     }
@@ -80,7 +80,13 @@ public class Employee {
     public void setUser(User user) {
         this.user = user;
     }
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
     @Override
     public String toString() {
         return "Employee{" +

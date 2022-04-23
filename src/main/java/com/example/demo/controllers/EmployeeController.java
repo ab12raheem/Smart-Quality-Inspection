@@ -39,7 +39,7 @@ public class EmployeeController {
         return employeeService.getByRole(role);
     }
     @GetMapping("byUserName/{userName}")
-    @PreAuthorize("hasRole('Admin')")
+    @PreAuthorize("hasAnyRole('Admin','Head','Employee')")
     public Employee getByUserName(@PathVariable String userName){
         return employeeService.getByUserName(userName);
     }
@@ -98,8 +98,9 @@ public class EmployeeController {
             @RequestParam (required = false) Date startingDate,
             @RequestParam (required = false) Integer salary,
             @RequestParam (required = false) Integer role,
+            @RequestParam (required = false) String image,
             @RequestParam (required = false) Integer departmentId){
-        employeeService.updateEmployee(userName,startingDate,salary,departmentId,role);
+        employeeService.updateEmployee(userName,startingDate,image,salary,departmentId,role);
 
     }
 

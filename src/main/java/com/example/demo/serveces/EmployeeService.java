@@ -199,7 +199,7 @@ public class EmployeeService {
 
     }
     @Transactional
-    public void updateEmployee(String userName, Date startingDate, Integer salary, Integer departmentId,Integer role) {
+    public void updateEmployee(String userName, Date startingDate,String image, Integer salary, Integer departmentId,Integer role) {
         Employee employee=getByUserName(userName);
 
         if(startingDate!=null &&
@@ -213,6 +213,10 @@ public class EmployeeService {
         if(role!=null &&
                 !Objects.equals(employee.getRole(),role)){
             employee.setRole(role);
+        }
+        if(image!=null &&
+                !Objects.equals(employee.getImage(),image)){
+            employee.setImage(image);
         }
         if(departmentId!=null &&
         departmentRepo.existsById(departmentId)){
