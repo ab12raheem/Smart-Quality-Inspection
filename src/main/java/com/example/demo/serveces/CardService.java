@@ -72,8 +72,12 @@ public class CardService {
 
         Optional<CardProducts> cardProducts1=cardProductsRepo.findByProduct(cardProducts.getProduct());
         if(cardProducts1.isPresent()){
-           throw new IllegalStateException("product have been Added before");
-
+            if(cardProducts1.get().getActivate()==false) {
+                cardProducts1.get().setActivate(true);
+                cardProductsRepo.save(cardProducts1.get());
+                return;
+            }else
+                throw new IllegalStateException("product have been Added before");
         }
         cardProducts.setActivate(true);
         cardProducts.setCard(card);
@@ -94,10 +98,12 @@ public class CardService {
         orderService.addOrder(userName,order);
 
         for(CardProducts cardProducts1:cardProducts){
-            OrderProducts orderProducts=new OrderProducts(cardProducts1.getCount(),
-                    order, cardProducts1.getProduct());
-            cardProductsRepo.delete(cardProducts1);
-            orderProductsRepo.save(orderProducts);
+            if(cardProducts1.getActivate()==true) {
+                OrderProducts orderProducts = new OrderProducts(cardProducts1.getCount(),
+                        order, cardProducts1.getProduct());
+                cardProductsRepo.delete(cardProducts1);
+                orderProductsRepo.save(orderProducts);
+            }
         }
     }
 
@@ -117,7 +123,7 @@ public class CardService {
         Card card=getCard(userName);
         Product product = productService.getById(productId);
         Optional<CardProducts>cardProducts=cardProductsRepo.findByProductAndCard(product,card);
-        if(!cardProducts.isPresent()){
+        if(!cardProducts.isPresent()||cardProducts.get().getActivate()==false){
             throw new IllegalStateException("no such product");
         }
         if(count!=null){
