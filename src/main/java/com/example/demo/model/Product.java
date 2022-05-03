@@ -40,7 +40,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private Set<OrderProducts> orderProducts = new HashSet<>();
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",orphanRemoval = true)
     @JsonIgnore
     private Set<CardProducts> cardProducts = new HashSet<>();
 

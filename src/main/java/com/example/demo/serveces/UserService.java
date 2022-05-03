@@ -117,20 +117,15 @@ public class UserService {
 
     public void initRoleAndUser() {
 
-        Role adminRole = new Role();
-        adminRole.setRoleName("Admin");
-        roleRepo.save(adminRole);
+     Role adminRole = roleRepo.getByRoleName("Admin");
 
-        Role headRole = new Role();
-        headRole.setRoleName("Head");
-        roleRepo.save(headRole);
-        Role customerRole = new Role();
-        customerRole.setRoleName("Customer");
-        roleRepo.save(customerRole);
+        Role headRole = roleRepo.getByRoleName("Head");
 
-        Role employeeRole = new Role();
-        employeeRole.setRoleName("Employee");
-        roleRepo.save(employeeRole);
+        Role customerRole = roleRepo.getByRoleName("Customer");
+
+
+        Role employeeRole = roleRepo.getByRoleName("Employee");
+
         User adminUser = new User();
         adminUser.setUserName("admin123");
         adminUser.setPassword(getEncodedPassword("admin@pass"));

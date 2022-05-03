@@ -47,7 +47,9 @@ public class CardService {
         List<CardProducts> cardProductsSet= cardProductsRepo.findAllByCard(card);
         List <Product> products=new ArrayList<>();
         for(CardProducts cardProducts : cardProductsSet){
-            products.add(cardProducts.getProduct());
+            if(cardProducts.getActivate()==true) {
+                products.add(cardProducts.getProduct());
+            }
 
         }
         return products;
@@ -67,11 +69,13 @@ public class CardService {
     public void addProduct(String userName, CardProducts cardProducts, Integer productId) {
         Card card=getCard(userName);
         Product product=productService.getById(productId);
+
         Optional<CardProducts> cardProducts1=cardProductsRepo.findByProduct(cardProducts.getProduct());
         if(cardProducts1.isPresent()){
            throw new IllegalStateException("product have been Added before");
 
         }
+        cardProducts.setActivate(true);
         cardProducts.setCard(card);
         cardProducts.setProduct(product);
         cardProductsRepo.save(cardProducts);
@@ -96,15 +100,17 @@ public class CardService {
             orderProductsRepo.save(orderProducts);
         }
     }
+
     @Transactional
     public void deleteProduct(String userName, Integer productId) {
         Card card=getCard(userName);
-        Product product = productService.getById(productId);
-        Optional<CardProducts>cardProducts=cardProductsRepo.findByProductAndCard(product,card);
-        if(!cardProducts.isPresent()){
-            throw new IllegalStateException("no such product");
+        Set<CardProducts> cardProducts=card.getCardProducts();
+
+        for(CardProducts cardProducts1:cardProducts){
+            if(cardProducts1.getProduct().getId()==productId)
+            cardProducts1.setActivate(false);
+
         }
-        cardProductsRepo.delete(cardProducts.get());
     }
     @Transactional
     public void updateProduct(String userName, Integer count,Integer productId) {

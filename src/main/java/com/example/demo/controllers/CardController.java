@@ -45,7 +45,7 @@ public class CardController {
     public void activateCard(@PathVariable String userName){
         cardService.activate(userName);
     }
-    @DeleteMapping("deleteProduct/{userName}/{productId}")
+    @PutMapping("deleteProduct/{userName}/{productId}")
     @PreAuthorize("hasRole('Customer')")
     public void deleteProduct(@PathVariable String  userName,
                               @PathVariable Integer productId){

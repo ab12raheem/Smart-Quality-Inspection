@@ -10,6 +10,7 @@ public class CardProducts {
     private Integer Id;
     private Integer price;
     private Integer count;
+    private Boolean activate;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "card_id",referencedColumnName = "id")
     private Card card;
@@ -20,11 +21,13 @@ public class CardProducts {
     public CardProducts() {
     }
 
-    public CardProducts(Integer price, Integer count, Card card, Product product) {
+    public CardProducts(Integer price, Integer count, Card card, Product product,Boolean activate) {
         this.price = product.getPrice();
         this.count = count;
         this.card = card;
         this.product = product;
+        this.activate=activate;
+
     }
 
     public Integer getId() {
@@ -61,6 +64,14 @@ public class CardProducts {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Boolean getActivate() {
+        return activate;
+    }
+
+    public void setActivate(Boolean activate) {
+        this.activate = activate;
     }
 
     @Override
