@@ -21,7 +21,7 @@ public class OrderController {
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    @GetMapping
+    @GetMapping("all")
     @PreAuthorize("hasRole('Admin')")
     public List<Order> getAllOrders(){
         return orderService.getAll();

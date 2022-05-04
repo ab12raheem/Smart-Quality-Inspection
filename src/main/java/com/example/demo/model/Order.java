@@ -22,24 +22,16 @@ public class Order {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id",referencedColumnName = "id")
     private Customer customer;
-
-
-
     @OneToMany(mappedBy = "order")
     @JsonIgnore
     private Set<OrderProducts> orderProducts = new HashSet<>();
-
-
-
     public Order() {
     }
-
     public Order(Date orderDate, Date orderDone,Boolean activate) {
         this.orderDate = orderDate;
         this.orderDone = orderDone;
         this.activate=activate;
     }
-
     public Boolean getActivate() {
         return activate;
     }

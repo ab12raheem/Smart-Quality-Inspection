@@ -9,7 +9,7 @@ public class OrderProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    private Integer price;
+    private Double price;
     private Integer count;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id",referencedColumnName = "id")
@@ -34,11 +34,11 @@ public class OrderProducts {
 
 
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

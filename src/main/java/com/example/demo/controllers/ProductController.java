@@ -80,12 +80,12 @@ public class ProductController {
     public void updateById(@PathVariable Integer id,
                            @RequestParam (required = false) Integer estimatedTime,
                            @RequestParam (required = false) String description,
-                           @RequestParam (required = false) Integer width,
-                           @RequestParam (required = false) Integer height,
+                           @RequestParam (required = false) Double width,
+                           @RequestParam (required = false) Double height,
                            @RequestParam (required = false) String photo,
-                           @RequestParam (required = false) Integer price
+                           @RequestParam (required = false) Double percent
                            ){
-        productService.updateById(id, estimatedTime,description,width,photo,height,price);
+        productService.updateById(id, estimatedTime,description,width,photo,height,percent);
 
     }
 
