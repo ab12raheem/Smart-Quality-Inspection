@@ -4,6 +4,7 @@ package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -22,6 +23,8 @@ public class Customer  {
     private String cardID;
     @OneToOne
     private User user;
+
+    private Date registrationDate;
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private Card card;
     @OneToMany(mappedBy = "customer")
@@ -38,6 +41,15 @@ public class Customer  {
         this.creditCard = creditCard;
         this.cardID = cardID;
         this.user = user;
+
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public Integer getId() {

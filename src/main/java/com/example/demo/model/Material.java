@@ -13,10 +13,13 @@ public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+
     private Integer availability;
     private String description;
     private Integer count;
     private String image;
+    private Double price;
     @JsonIgnore
     @OneToMany(mappedBy = "material")
     private Set<EnrolledMaterials> enrolledMaterials=new HashSet<>();
@@ -34,11 +37,12 @@ public class Material {
     public Material() {
     }
 
-    public Material(Integer availability, String description, Integer count, String image) {
+    public Material(Integer availability, String description, Integer count, String image,Double price ) {
         this.availability = availability;
         this.description = description;
         this.count = count;
         this.image = image;
+        this.price=price;
     }
     public WareHouse getWareHouse() {
         return wareHouse;
@@ -85,6 +89,14 @@ public class Material {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Set<EnrolledMaterials> getEnrolledMaterials() {

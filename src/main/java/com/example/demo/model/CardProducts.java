@@ -8,7 +8,7 @@ public class CardProducts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
-    private Integer price;
+    private Double price;
     private Integer count;
     private Boolean activate;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -34,11 +34,11 @@ public class CardProducts {
         return Id;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

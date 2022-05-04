@@ -13,7 +13,7 @@ public class Employee {
     private Integer id;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date startingDate;
-    private Integer salary;
+    private Double salary;
     private Integer role;
     private String image;
     @OneToOne
@@ -25,7 +25,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(Date startingDate, Integer salary
+    public Employee(Date startingDate, Double salary
             , Integer role, String image, User user, Department department) {
         this.startingDate = startingDate;
         this.salary = salary;
@@ -49,11 +49,11 @@ public class Employee {
         this.startingDate = startingDate;
     }
 
-    public Integer getSalary() {
+    public Double getSalary() {
         return salary;
     }
 
-    public void setSalary(Integer salary) {
+    public void setSalary(Double salary) {
         this.salary = salary;
     }
 

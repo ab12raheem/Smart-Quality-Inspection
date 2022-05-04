@@ -96,7 +96,7 @@ public class EmployeeController {
     public void updateEmployee(
             @PathVariable  String userName ,
             @RequestParam (required = false) Date startingDate,
-            @RequestParam (required = false) Integer salary,
+            @RequestParam (required = false) Double salary,
             @RequestParam (required = false) Integer role,
             @RequestParam (required = false) String image,
             @RequestParam (required = false) Integer departmentId){

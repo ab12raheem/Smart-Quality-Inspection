@@ -72,6 +72,8 @@ public class ProductService {
         enrolledMaterials.setMaterial(material);
         enrolledMaterials.setProduct(product);
         enrolledMaterialsRepo.save(enrolledMaterials);
+        product.setPrice();
+        productRepo.save(product);
     }
 
     public void addEnrolledProduct(Integer productId, Integer enrolledProductId,
@@ -81,6 +83,8 @@ public class ProductService {
         productsEnrolled.setProduct(product);
         productsEnrolled.setProductEnrolled(enrolledProduct);
         productsEnrolledRepo.save(productsEnrolled);
+        product.setPrice();
+        productRepo.save(product);
     }
 
     public void addProduct(Product product,String name) {
@@ -90,6 +94,7 @@ public class ProductService {
                  ||product.getPrice()<0||product.getEstimatedTime()<0){
              throw new IllegalStateException("invalid input");
          }
+
          product.setWareHouse(wareHouse);
          productRepo.save(product);
 
@@ -104,8 +109,8 @@ public class ProductService {
     }
     @Transactional
     public void updateById(Integer id, Integer estimatedTime,
-                           String description, Integer width,
-                           String photo, Integer height, Integer price) {
+                           String description, Double width,
+                           String photo, Double height, Double percent) {
         Product product=getById(id);
         if(estimatedTime!=null &&estimatedTime>0){
             product.setEstimatedTime(estimatedTime);
@@ -115,14 +120,18 @@ public class ProductService {
                  ){
             product.setWidth(width);
         }
+        if(percent!=null
+                &&percent>0
+        ){
+            product.setPercent(percent);
+            product.setPrice();
+        }
+
         if(height!=null&&height>0
                 ){
             product.setHeight(height);
         }
-        if(price!=null && price>0
-                ){
-            product.setPrice(price);
-        }
+
         if(description!=null && description.length()>0
                 ){
             product.setDescription(description);

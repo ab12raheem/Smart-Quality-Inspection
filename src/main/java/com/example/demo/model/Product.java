@@ -17,10 +17,11 @@ public class Product {
     private Integer estimatedTime;
     private String description;
     private Integer quantity;
-    private Integer height;
-    private  Integer width;
+    private Double  height;
+    private  Double width;
     private String photo;
-    private Integer price;
+    private Double price;
+    private Double percent;
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private Set<ProductsEnrolled> productsEnrolled=new HashSet<>();
@@ -53,15 +54,16 @@ public class Product {
     public Product() {
     }
 
-    public Product(Integer estimatedTime, String description, Integer quantity, Integer height, Integer width, String photo,
-                   Integer price) {
+    public Product(Integer estimatedTime, String description, Integer quantity, Double height, Double width, String photo,
+                   Double percent) {
         this.estimatedTime = estimatedTime;
         this.description = description;
         this.quantity = quantity;
         this.height = height;
         this.width = width;
         this.photo = photo;
-        this.price=price;
+        this.percent=percent;
+        setPrice();
 
     }
     public WareHouse getWareHouse() {
@@ -94,15 +96,15 @@ public class Product {
         this.description = description;
     }
 
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public Integer getWidth() {
+    public Double getWidth() {
         return width;
     }
 
@@ -110,7 +112,7 @@ public class Product {
         return enrolledMaterials;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(Double width) {
         this.width = width;
     }
 
@@ -124,12 +126,29 @@ public class Product {
         this.photo = photo;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setPrice() {
+        Double sum=0.0;
+        for(EnrolledMaterials enrolledMaterials1:this.enrolledMaterials){
+            sum+=enrolledMaterials1.getCount()*enrolledMaterials1.getMaterial().getPrice();
+
+        }
+        for(ProductsEnrolled productsEnrolled1 : this.productsEnrolled){
+            sum+=productsEnrolled1.getCount()*productsEnrolled1.getProduct().getPrice();
+        }
+        sum=sum*this.percent+sum;
+        this.price=sum;
+    }
+
+    public Double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Double percent) {
+        this.percent = percent;
     }
 
     public Set<ProductsEnrolled> getProductsEnrolled() {
@@ -143,6 +162,7 @@ public class Product {
     public Set<CardProducts> getCardProducts() {
         return cardProducts;
     }
+
 
     @Override
     public String toString() {

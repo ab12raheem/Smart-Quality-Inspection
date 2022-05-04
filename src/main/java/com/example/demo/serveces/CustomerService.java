@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,13 +23,15 @@ public class CustomerService {
     private final OrderRepo orderRepo;
     private final RoleRepo roleRepo;
     private final UserService userService;
+    private final FinancialService financialService;
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo, RoleRepo roleRepo, UserService userService) {
+    public CustomerService(CustomerRepo customerRepo, UserRepo userRepo, OrderRepo orderRepo, RoleRepo roleRepo, UserService userService, FinancialService financialService) {
         this.customerRepo = customerRepo;
         this.userRepo = userRepo;
         this.orderRepo = orderRepo;
         this.roleRepo = roleRepo;
         this.userService = userService;
+        this.financialService = financialService;
     }
 
     public List<Customer> geAllCustomers() {
@@ -61,6 +65,7 @@ public class CustomerService {
         return customer.get();
     }
 
+
     public void addCustomer(Customer customer) {
         Optional<User> user = userRepo.getByUserName(customer.getUser().getUserName());
         Optional<User>user1=userRepo.getByEmail(customer.getUser().getEmail());
@@ -77,7 +82,9 @@ public class CustomerService {
         customer.getUser().setRole(role);
         userService.addUser(customer.getUser());
         customer.setUser(customer.getUser());
+        customer.setRegistrationDate(Date.valueOf(LocalDate.now()));
         customerRepo.save(customer);
+        financialService.updateFinancial();
     }
 
     /*public void deleteById(String userName) {

@@ -199,7 +199,7 @@ public class EmployeeService {
 
     }
     @Transactional
-    public void updateEmployee(String userName, Date startingDate,String image, Integer salary, Integer departmentId,Integer role) {
+    public void updateEmployee(String userName, Date startingDate,String image, Double salary, Integer departmentId,Integer role) {
         Employee employee=getByUserName(userName);
 
         if(startingDate!=null &&

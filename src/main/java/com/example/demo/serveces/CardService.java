@@ -20,14 +20,16 @@ public class CardService {
     private final OrderService orderService;
     private final OrderProductsRepo orderProductsRepo;
     private final ProductService productService;
+    private final FinancialService financialService;
     @Autowired
-    public CardService(CardRepo cardRepo, CardProductsRepo cardProductsRepo, CustomerService customerService, OrderService orderService, OrderProductsRepo orderProductsRepo, ProductService productService) {
+    public CardService(CardRepo cardRepo, CardProductsRepo cardProductsRepo, CustomerService customerService, OrderService orderService, OrderProductsRepo orderProductsRepo, ProductService productService, FinancialService financialService) {
         this.cardRepo = cardRepo;
         this.cardProductsRepo = cardProductsRepo;
         this.customerService = customerService;
         this.orderService = orderService;
         this.orderProductsRepo = orderProductsRepo;
         this.productService = productService;
+        this.financialService = financialService;
     }
 
     public Card getCard(String userName) {
@@ -105,6 +107,7 @@ public class CardService {
                 orderProductsRepo.save(orderProducts);
             }
         }
+        financialService.updateFinancial();
     }
 
     @Transactional
@@ -117,6 +120,7 @@ public class CardService {
             cardProducts1.setActivate(false);
 
         }
+
     }
     @Transactional
     public void updateProduct(String userName, Integer count,Integer productId) {
