@@ -26,6 +26,7 @@ public class Customer  {
 
     private Date registrationDate;
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Card card;
     @OneToMany(mappedBy = "customer")
     @JsonIgnore
