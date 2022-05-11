@@ -17,4 +17,9 @@ public interface OrderRepo extends JpaRepository<Order,Integer> {
     @Query(value = "SELECT * FROM public.order WHERE customer_id= ?1 and activate=false",
     nativeQuery = true)
     Optional<Order> getCard(Integer customerId);
+    @Query(
+            value = "SELECT * FROM public.order ORDER BY order_date DESC LIMIT 5 ",
+            nativeQuery = true
+    )
+    List<Order> getLast();
 }

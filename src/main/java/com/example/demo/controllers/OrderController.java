@@ -84,6 +84,13 @@ public class OrderController {
         orderService.setActivate(id);
 
     }
+    @GetMapping("getLast")
+    @PreAuthorize("hasAnyRole('Admin','Customer')")
+    public List<Order>getLast(){
+        return orderService.getLast();
+    }
+
+
 
 
 

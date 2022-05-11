@@ -143,4 +143,8 @@ public class OrderService {
             order.setActivate(false);
         }else order.setActivate(true);
     }
+
+    public List<Order> getLast() {
+        return orderRepo.getLast();
+    }
 }
