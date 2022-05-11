@@ -107,7 +107,7 @@ public class CardService {
                 orderProductsRepo.save(orderProducts);
             }
         }
-        financialService.updateFinancial();
+
     }
 
     @Transactional
