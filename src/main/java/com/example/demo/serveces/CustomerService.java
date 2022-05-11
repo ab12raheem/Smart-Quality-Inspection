@@ -84,7 +84,6 @@ public class CustomerService {
         customer.setUser(customer.getUser());
         customer.setRegistrationDate(Date.valueOf(LocalDate.now()));
         customerRepo.save(customer);
-
     }
 
     /*public void deleteById(String userName) {

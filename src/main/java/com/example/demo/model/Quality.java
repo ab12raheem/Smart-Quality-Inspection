@@ -13,17 +13,26 @@ public class Quality {
     Integer sumColors;
     Integer numDefect;
     Integer numOk;
+    String photo;
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public Quality() {
     }
 
-    public Quality(Boolean activate, Double area, Integer sumColors, Integer numDefect, Integer numOk) {
+    public Quality(Boolean activate, Double area, Integer sumColors, Integer numDefect, Integer numOk,String photo) {
         this.activate = activate;
         this.area = area;
         this.sumColors = sumColors;
         this.numDefect = numDefect;
         this.numOk = numOk;
+        this.photo=photo;
     }
 
     public Integer getId() {
