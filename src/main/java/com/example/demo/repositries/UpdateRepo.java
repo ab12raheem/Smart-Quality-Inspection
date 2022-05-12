@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface UpdateRepo extends JpaRepository<Update,Integer> {
     @Query(
-            value = "SELECT * FROM update ORDER BY update_date DESC LIMIT 5",
+            value = "SELECT * FROM update ORDER BY id DESC LIMIT 5",
             nativeQuery = true
     )
     List<Update> getUpdate();
