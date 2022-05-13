@@ -156,4 +156,8 @@ public class FinancialService {
        return  financial.get();
 
     }
+
+    public List<Financial> getLastTenRecords() {
+        return financialRepo.getLastTenRecords();
+    }
 }
