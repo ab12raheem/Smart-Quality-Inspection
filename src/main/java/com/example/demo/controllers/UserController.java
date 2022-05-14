@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.model.User;
 import com.example.demo.serveces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -42,6 +43,7 @@ public class UserController {
         userService.deleteByUserName(userName);
     }
     @PutMapping("/update/{userName}")
+    @PreAuthorize("hasAnyRole('Admin','Employee','Head')")
     void updateByUserName(@PathVariable String userName,
                           @RequestParam (required = false) String firstName,
                           @RequestParam (required = false) String lastName,

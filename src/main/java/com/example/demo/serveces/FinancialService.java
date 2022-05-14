@@ -126,7 +126,7 @@ public class FinancialService {
         LocalDate localDateLast= LocalDate.of(now.getYear(), now.getMonth().minus(1), 1);
         Optional<Financial> lastMonth=financialRepo.findByMonth(Date.valueOf(localDateLast));
         if(lastMonth.isPresent()){
-            Double profitsToLastMonth= (financial1.getProfitsOfTheMonth()-lastMonth.get().getProfitsOfTheMonth())/100;
+            Double profitsToLastMonth= ((financial1.getProfitsOfTheMonth()-lastMonth.get().getProfitsOfTheMonth())/lastMonth.get().getProfitsOfTheMonth())*100;
             financial1.setProfitsToLastMonth(profitsToLastMonth);
 
             financial1.setCustomerToLastMonth(financial1.getCustomerCount()-lastMonth.get().getCustomerCount());

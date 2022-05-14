@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface NotificationRepo extends JpaRepository<Notification,Integer> {
     @Query(
-            value = "SELECT * FROM public.notification ORDER BY id DESC LIMIT 5",
+            value = "SELECT * FROM notification ORDER BY id DESC LIMIT 5",
             nativeQuery = true
     )
     List<Notification> getLast();
